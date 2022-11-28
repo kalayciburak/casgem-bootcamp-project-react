@@ -17,13 +17,23 @@ export default class ApplicantService {
             .then((res) => {
                 return res.data;
             }).catch((err) => {
-                return err.response.data;
+                return err.response;
             });
     }
 
     delete(id) {
         return axios.delete(this.url + '/' + id).then(res => {
             return res.data.message;
+        }).catch(err => {
+            return err.response;
+        })
+    }
+
+    removeAnApplicant(id) {
+        return axios.delete(this.url + '/remove-an-applicant/' + id).then(res => {
+            return res.data.message;
+        }).catch(err => {
+            return err.response;
         })
     }
 }
