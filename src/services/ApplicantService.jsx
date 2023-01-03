@@ -4,21 +4,22 @@ export default class ApplicantService {
     url = 'http://localhost:8080/api/v1/applicants';
 
     async getAll() {
-        return await axios.get(this.url);
+        return await axios.get(this.url).catch(err => {
+            return err.response;
+        });
     }
 
     async add(applicant) {
         return await axios({
-                               method: 'POST',
-                               url: this.url,
-                               data: applicant,
-                               headers: { 'Content-Type': 'application/json;charset-UTF-8' }
-                           })
-            .then((res) => {
-                return res.data;
-            }).catch((err) => {
-                return err.response;
-            });
+            method: 'POST',
+            url: this.url,
+            data: applicant,
+            headers: {'Content-Type': 'application/json;charset-UTF-8'}
+        }).then((res) => {
+            return res.data;
+        }).catch((err) => {
+            return err.response;
+        });
     }
 
     delete(id) {
@@ -26,7 +27,7 @@ export default class ApplicantService {
             return res.data.message;
         }).catch(err => {
             return err.response;
-        })
+        });
     }
 
     removeAnApplicant(id) {
@@ -34,6 +35,14 @@ export default class ApplicantService {
             return res.data.message;
         }).catch(err => {
             return err.response;
-        })
+        });
+    }
+
+    async updateApplicant(applicant, id) {
+        return await axios.put(this.url + '/' + id, applicant).then(res => {
+            return res.data;
+        }).catch(err => {
+            return err.response;
+        });
     }
 }

@@ -1,8 +1,8 @@
-import axios from "axios";
+import axios from 'axios';
 
 export default class BootcampService {
 
     async getAll() {
-        return await axios.get(`http://localhost:8080/api/v1/bootcamps`)
+        return await axios.get(`http://localhost:8080/api/v1/bootcamps`);
     }
 }
