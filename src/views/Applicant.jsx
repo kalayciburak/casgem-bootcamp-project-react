@@ -13,6 +13,8 @@ import checkIfDateOfBirthValid from '../functions/validations/rules/checkIfDateO
 import checkIfAllInputsValid from '../functions/validations/rules/checkIfAllInputsValid.js';
 import displayErrorAlert from '../utils/swal/displayErrorAlert.js';
 import checkIfAnyChangesAreMade from '../functions/validations/checkIfAnyChangesAreMade.js';
+import CRUDButtons from '../components/CRUDbuttons.jsx';
+import AddIcon from '../svgs/AddIcon.jsx';
 
 export default function () {
     const [applicants, setApplicants] = useState([]);
@@ -149,7 +151,11 @@ export default function () {
     }
 
     useEffect(() => {
-        applicantService.getAll().then(result => setApplicants(result.data.data));
+        applicantService.getAll().then(result => {
+            console.log(result.config.headers);
+            setApplicants(result.data.data)
+        });
+
     }, []);
 
     function addApplicant(applicant) {
@@ -197,17 +203,9 @@ export default function () {
                 <h1 className="text-3xl font-bold text-gray-700 mb-2">Applicants Table</h1>
                 <button onClick={() => { SwalAddorUpdate(); }}
                         className={'flex bg-green-600 text-xl text-white rounded-3xl p-3 mb-2'}>
-                    Add Applicant
-                    <svg xmlns="http://www.w3.org/2000/svg"
-                         viewBox="0 0 24 24"
-                         fill="currentColor"
-                         className="w-7 h-7 ml-2">
-                        <path fillRule="evenodd"
-                              d="M12 3.75a.75.75 0 01.75.75v6.75h6.75a.75.75 0 010 1.5h-6.75v6.75a.75.75 0 01-1.5 0v-6.75H4.5a.75.75 0 010-1.5h6.75V4.5a.75.75 0 01.75-.75z"
-                              clipRule="evenodd"/>
-                    </svg>
+                    Add Applicant {/*<AddIcon/>*/}
                 </button>
-                <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                <table className="w-full text-sm text-center text-gray-500 dark:text-gray-400">
                     <thead
                         className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
@@ -230,7 +228,7 @@ export default function () {
                                 Date of Birth
                             </th>
                             <th scope="col" className="py-3 px-6">
-
+                                CRUD Operations
                             </th>
                         </tr>
                     </thead>
@@ -256,26 +254,8 @@ export default function () {
                                 <td className="py-3 px-6">
                                     {applicant.dateOfBirth}
                                 </td>
-                                <td className={'p-3'}>
-                                    <button onClick={() => SwalAddorUpdate(applicant, applicant.id)}
-                                            className={'bg-blue-600 text-gray-300 mr-1 p-1 rounded-xl'}>
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                             fill="currentColor" className="w-5 h-5">
-                                            <path fillRule="evenodd"
-                                                  d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
-                                                  clipRule="evenodd"/>
-                                        </svg>
-                                    </button>
-                                    <span className={'text-2xl'} style={{position: 'relative', top: '-4px'}}>|</span>
-                                    <button onClick={() => deleteConfirm(applicant)}
-                                            className={'bg-red-800 text-gray-300 ml-1 p-1 rounded-xl'}>
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                             fill="currentColor" className="w-5 h-5">
-                                            <path fillRule="evenodd"
-                                                  d="M16.5 4.478v.227a48.816 48.816 0 013.878.512.75.75 0 11-.256 1.478l-.209-.035-1.005 13.07a3 3 0 01-2.991 2.77H8.084a3 3 0 01-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 01-.256-1.478A48.567 48.567 0 017.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 013.369 0c1.603.051 2.815 1.387 2.815 2.951zm-6.136-1.452a51.196 51.196 0 013.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 00-6 0v-.113c0-.794.609-1.428 1.364-1.452zm-.355 5.945a.75.75 0 10-1.5.058l.347 9a.75.75 0 101.499-.058l-.346-9zm5.48.058a.75.75 0 10-1.498-.058l-.347 9a.75.75 0 001.5.058l.345-9z"
-                                                  clipRule="evenodd"/>
-                                        </svg>
-                                    </button>
+                                <td className="py-3 px-6">
+                                    {CRUDButtons(SwalAddorUpdate,deleteConfirm,applicant)}
                                 </td>
                             </tr>
                         ))}

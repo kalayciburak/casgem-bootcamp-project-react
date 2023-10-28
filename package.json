@@ -14,10 +14,12 @@
     "formik": "^2.2.9",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-svg": "^15.1.17",
     "sweetalert2": "^11.6.14",
     "yup": "^0.32.11"
   },
   "devDependencies": {
+    "@babel/traverse": "^7.23.2",
     "@types/react": "^18.0.24",
     "@types/react-dom": "^18.0.8",
     "@vitejs/plugin-react": "^2.2.0",
